@@ -1,0 +1,19 @@
+# Настройки IDE (PyCharm, VS Code)
+.idea/
+.vscode/
+*.swp
+
+# Кэш Python (те самые папки, которые спамят в Git)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальные окружения (если будешь создавать)
+venv/
+env/
+.venv/
+env_site/
+
+# Файлы операционной системы
+.DS_Store
+Thumbs.db
