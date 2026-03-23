@@ -1,0 +1,5 @@
+P = float(input("Начальная сумма вклада: "))
+R = float(input("Процент по вкладу: "))
+T = int(input("Количество лет: "))
+result = round(R * T * P / 100)
+print(f"Начисленные проценты: {result}")
