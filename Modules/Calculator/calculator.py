@@ -21,7 +21,7 @@ def calc():
                 print("Результат",num1 - num2)
             elif operation == '/':
                 if num2 != 0:
-                    print("Результат",num1 * num2)
+                    print("Результат",num1 / num2)
                 else:
                     print("Ошибка: Деление на ноль!")
             else:
