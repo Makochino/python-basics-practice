@@ -28,7 +28,10 @@ def number_to_words(num):
     elif num < 100:  
         tens_digit = num // 10
         ones_digit = num % 10
-        return tens[tens_digit] + (" " + ones[ones_digit] if ones_digit != 0 else "")
+        if ones_digit == 0:
+            return tens[tens_digit] 
+        else:
+            return tens[tens_digit] + " " + number_to_words(ones_digit) 
     else:  
         hundreds_digit = num // 100
         remainder = num % 100
