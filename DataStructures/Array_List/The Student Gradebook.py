@@ -27,11 +27,14 @@ print("List of the grades above avarage --->", average_list)
 
 # Step 4: bubble algorithm which sorts a list of grades above the average
 
-n = len(average_list)
-
-for i in range(n-1):
-    for j in range(n-i-1):
+for i in range(len(average_list)-1):
+    swapped = False
+    for j in range(len(average_list)-i-1):
         if average_list[j] > average_list[j+1]:
             average_list[j], average_list[j+1] = average_list[j+1], average_list[j]
+            swapped = True
+    if not swapped:
+        break
+
 
 print(f"Sorted average list: {average_list}")
