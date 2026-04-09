@@ -1,0 +1,1 @@
+a = ("123", 312321, ['1', '2']) # immutable data structure, you can not add, modify or delete anything in tuple
