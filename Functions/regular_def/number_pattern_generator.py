@@ -10,8 +10,8 @@ def number_pattern(n):
                 continue
             else:
                 result += str(num) + " "
-        return result
+        return result.strip()
 
-print(number_pattern(-1))
+print(number_pattern(5))
         
         
