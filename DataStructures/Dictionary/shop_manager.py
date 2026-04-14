@@ -7,5 +7,42 @@ inventory = {
     "butter": {"price": 3.2,  "stock": 0,  "category": "dairy"},
 }
 
-for key_1, value_1 in inventory.items():
-    print(f"{key_1} - {value_1['price']} - in stock: {value_1['stock']}")
+# Step 1 — Warm up
+for key, info in inventory.items():
+    print(f"{key} - {info['price']} — in stock: {info['stock']}")
+
+# Step 2 — Low stock alert
+def low_stock(inventory, threshold):
+    result = []
+    for key, info in inventory.items():
+        stock = info['stock']
+        if stock <= threshold:
+            result.append(key)
+    return result
+
+print(low_stock(inventory, 5))
+
+#Step 3 — Category filter
+def by_category(inventory, category):
+    new_dict = {}
+    for key, info in inventory.items():
+        dict_category = info['category']
+        if dict_category == category:
+            new_dict[key] = info
+    return new_dict
+
+print(by_category(inventory, "dairy"))
+
+#Step 4 — Restock
+def restock(inventory, item, amount):
+    if item in inventory: 
+        info = inventory[item]
+        old_stock = info['stock']
+        info['stock'] += amount
+        return f"{item} stock: {old_stock} -> {info['stock']}"
+    return f"Warning: {item} not found"
+        
+print(restock(inventory, "milk", 10))
+print(restock(inventory, "milk", 10))
+
+#Step 5 - Total value
