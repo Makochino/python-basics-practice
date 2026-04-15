@@ -46,3 +46,24 @@ print(restock(inventory, "milk", 10))
 print(restock(inventory, "milk", 10))
 
 #Step 5 - Total value
+def total_value(inventory):
+    total = 0 
+    for key, info in inventory.items():
+        total += info['stock'] * info['price']
+    return total
+
+print(total_value(inventory))
+
+#Step 6 - Priciest category
+def priciest_category(inventory):
+    category_by_price = {}
+    count = 0 # you should fix the count where ***
+    for info in inventory.values():
+        price_sum = info['price']
+        if info['category'] not in category_by_price:
+            category_by_price.update({info['category']: {"sum": info['price'], "count": count}}) # ***
+        else:
+            category_by_price.update({info['category']: info['price'] + price_sum})
+    return category_by_price
+
+print(priciest_category(inventory))
