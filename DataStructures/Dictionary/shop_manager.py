@@ -8,14 +8,14 @@ inventory = {
 }
 
 # Step 1 — Warm up
-for key, info in inventory.items():
-    print(f"{key} - {info['price']} — in stock: {info['stock']}")
+for key, data in inventory.items():
+    print(f"{key} - {data['price']} — in stock: {data['stock']}")
 
 # Step 2 — Low stock alert
 def low_stock(inventory, threshold):
     result = []
-    for key, info in inventory.items():
-        stock = info['stock']
+    for key, data in inventory.items():
+        stock = data['stock']
         if stock <= threshold:
             result.append(key)
     return result
@@ -25,10 +25,10 @@ print(low_stock(inventory, 5))
 #Step 3 — Category filter
 def by_category(inventory, category):
     new_dict = {}
-    for key, info in inventory.items():
-        dict_category = info['category']
+    for key, data in inventory.items():
+        dict_category = data['category']
         if dict_category == category:
-            new_dict[key] = info
+            new_dict[key] = data
     return new_dict
 
 print(by_category(inventory, "dairy"))
@@ -36,10 +36,10 @@ print(by_category(inventory, "dairy"))
 #Step 4 — Restock
 def restock(inventory, item, amount):
     if item in inventory: 
-        info = inventory[item]
-        old_stock = info['stock']
-        info['stock'] += amount
-        return f"{item} stock: {old_stock} -> {info['stock']}"
+        data = inventory[item]
+        old_stock = data['stock']
+        data['stock'] += amount
+        return f"{item} stock: {old_stock} -> {data['stock']}"
     return f"Warning: {item} not found"
         
 print(restock(inventory, "milk", 10))
@@ -48,22 +48,35 @@ print(restock(inventory, "milk", 10))
 #Step 5 - Total value
 def total_value(inventory):
     total = 0 
-    for key, info in inventory.items():
-        total += info['stock'] * info['price']
+    for key, data in inventory.items():
+        total += data['stock'] * data['price']
     return total
 
 print(total_value(inventory))
 
 #Step 6 - Priciest category
 def priciest_category(inventory):
+    
     category_by_price = {}
-    count = 0 # you should fix the count where ***
-    for info in inventory.values():
-        price_sum = info['price']
-        if info['category'] not in category_by_price:
-            category_by_price.update({info['category']: {"sum": info['price'], "count": count}}) # ***
+    best_avg = 0
+    best_category = ''
+    
+    for data in inventory.values():
+        category = data['category']
+        price = data['price']
+        if category not in category_by_price:
+            category_by_price.update({category: {"sum": price, "count": 1}})
         else:
-            category_by_price.update({info['category']: info['price'] + price_sum})
-    return category_by_price
+            category_by_price[category]["sum"] += price
+            category_by_price[category]["count"] += 1
+        
+    for category, data in category_by_price.items():
+        average = data['sum'] / data['count']
+        if average > best_avg:
+            best_avg = average
+            best_category = category
+    
+    return best_category
+
 
 print(priciest_category(inventory))
