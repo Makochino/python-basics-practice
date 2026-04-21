@@ -16,22 +16,24 @@ logins = [
 
 def detect_suspicious(logins):
     
-    dict_user_ips = {}
-    ips_result = set()
+    user_ips = {}
+    result = {}
     
     for user, ip in logins:
         
-        if user not in dict_user_ips:
-            dict_user_ips[user] = []
-        dict_user_ips[user].append(ip)
+        if user not in user_ips:
+            user_ips[user] = []
+        user_ips[user].append(ip)
 
-    for user, ips in dict_user_ips.items():
+    for user, ips in user_ips.items():
         
         ip_count = {}
 
         #Rule 1 start
         if len(set(ips)) >= 3:
-            ips_result.add( (f"Rule 1: {user}") )
+            if user not in result:
+                result[user] = []
+            result[user].append('Rule 1')
         #Rule 1 end
 
         #Rule 2 start
@@ -43,26 +45,29 @@ def detect_suspicious(logins):
                 ip_count[ip] += 1
             
             if ip_count[ip] >= 3: 
-                ips_result.add((f"Rule 2: {user}"))
+                if user not in result:
+                    result[user] = []
+                result[user].append('Rule 2')
                 break
+                
         #Rule 2 end
         
         #Rule 3 start
         has_private = False
         has_public = False
 
-        for ip in set(ips):
+        for ip in ips:
             if ip.startswith("192.168.") or ip.startswith("10."):
                 has_private = True
             else:
                 has_public = True
         
         if has_private and has_public:
-            ips_result.add((f"Rule 3: {user}"))
+            if user not in result:
+                result[user] = []
+            result[user].append('Rule 3')
         #Rule 3 end
     
-    sorted_ips_results = sorted(list(ips_result))
-    
-    return f"Rules results {sorted_ips_results}"
+    return f"Rules results: {result}"
 
 print(detect_suspicious(logins))
