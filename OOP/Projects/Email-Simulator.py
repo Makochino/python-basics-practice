@@ -24,9 +24,12 @@ class Inbox:
     def __init__(self):
         self.emails = []
 
-    def receive_email(self, email_list):
-        for email in email_list:
-            self.emails.append(email)
+    def receive_email(self, email_s):
+        if isinstance(email_s, list):    
+            for email in email_s:
+                self.emails.append(email)
+        else:
+            self.emails.append(email_s)
 
     def list_emails(self):
         if not self.emails:
@@ -38,7 +41,7 @@ class Inbox:
             print(f"{i}. {email}")
         return 
 
-    def read_email(self, index):
+    def mark_as_read(self, index):
         index -= 1
         if not self.emails:
             print("Inbox is empty.\n")
@@ -51,14 +54,14 @@ class Inbox:
             print(f"Index that your choised is out of range")
             return
 
-    def delete_email(self, index):
+    def del_email(self, index):
         index -= 1
         if not self.emails:
             print("Inbox is empty.\n")
             return 
         
         if index >= 0 and index < len(self.emails):
-            print(f"Email {self.emails[index]} was succefully deleted")
+            print(f"\nEmail {self.emails[index]} was succesfully deleted")
             self.emails.pop(index) 
         else:
             print(f"Index that your choised is out of range")
@@ -66,35 +69,34 @@ class Inbox:
 
 
 class User():
-    def __init__(self, name, inbox):
+    def __init__(self, name):
         self.name = name
         self.inbox = Inbox()
 
     def send_email(self, receiver, subject, body):
-        return None
-# User should create the Email object.
+        email = Email(self.name, receiver.name, subject, body)
+        receiver.inbox.receive_email(email)
 
-# Think in real life:
+    def check_inbox(self):
+        return self.inbox.list_emails()
+        
+    def mark_as_read(self, index):
+        return self.inbox.mark_as_read(index)
+        
+    def del_email(self, index):
+        return self.inbox.del_email(index)
+       
 
-# John writes a letter
-# ↓
-# Letter is created
-# ↓
-# Letter is put into Mike's mailbox
+if __name__ == "__main__":
     
+    #User class checker
+    user_1 = User("Dio Brando")
+    receiver_1 = User("Jonathan Joester")
 
-#Email class checker
-email_1 = Email("Dude", "Another-Dude", "How to say Hello to your dude", "Just say hey: what's up dude")
-email_2 = Email("Duder", "Another-Duder", "How to say Hello to your duder", "Just say hey: what's up duder")
-email_3 = Email("Dudler", "Another-Dudler", "How to say Hello to your dudler", "Just say: hey what's up dudler")
-
-
-#Inbox class checker
-inbox_1 = Inbox()
-inbox_1.receive_email([email_1, email_2, email_3])
-inbox.list_emails()
-
-
-#User class checker
-
+    user_1.send_email(receiver_1, "Personal question for the motherfucker", "How do you still alive?")
+    user_1.send_email(receiver_1, "Just a quick reminder", "How does it feel to be beaten by the schoolboy?")
+    receiver_1.mark_as_read(1)
+    receiver_1.check_inbox()
+    receiver_1.del_email(1)
+    receiver_1.check_inbox()
 
